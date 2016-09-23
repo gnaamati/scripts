@@ -30,7 +30,8 @@ my $hsp_hash;
     ##Create a gene hash (where the genes are mapped)
     my $gene_hash = create_gene_hash($gene_file);
 
-    ##Get hsps giving a free pass to ones that completely overlap genes
+    ##Get hsps (high scoring alignment pairs between CSS and TGAC) 
+    ## giving a free pass to ones that completely overlap genes
     my @hsps = get_hsps($lastz_file, $gene_hash);
 
     my $tgac_hash;
@@ -114,6 +115,7 @@ sub print_hsp{
     }
     $hsp_hash->{$hsp_string}++;
 
+    ##SQL for insert
     my $sql = qq{
     insert into assembly (asm_seq_region_id,cmp_seq_region_id,asm_start,asm_end,cmp_start,cmp_end,ori)
     values ($asm_seq, $cmp_seq, $start1, $end1, $start2, $end2,$strand);
